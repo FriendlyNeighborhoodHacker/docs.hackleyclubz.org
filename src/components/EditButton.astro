@@ -1,0 +1,63 @@
+---
+/**
+ * Dev-only floating edit button.
+ * Renders only when running under `astro dev` (import.meta.env.DEV).
+ * Links to the in-app editor for the current page's source file.
+ */
+interface Props {
+  /** Slug of the doc being viewed, e.g. "developer-docs/getting-started". */
+  slug: string;
+}
+
+const { slug } = Astro.props;
+const isDev = import.meta.env.DEV;
+---
+
+{
+  isDev && (
+    <a class="edit-button" href={`/edit/${slug}`} title="Edit this page">
+      <svg
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M12 20h9" />
+        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z" />
+      </svg>
+      <span>Edit</span>
+    </a>
+  )
+}
+
+<style>
+  .edit-button {
+    position: fixed;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    z-index: 50;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1rem;
+    background: var(--brand-gradient);
+    color: #fff;
+    font-family: var(--font-title);
+    font-weight: 200;
+    border-radius: 999px;
+    box-shadow: 0 6px 18px rgba(106, 61, 232, 0.35);
+    text-decoration: none;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .edit-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(106, 61, 232, 0.45);
+    text-decoration: none;
+    color: #fff;
+  }
+</style>

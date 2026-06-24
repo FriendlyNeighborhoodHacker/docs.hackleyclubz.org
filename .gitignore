@@ -17,6 +17,9 @@ pnpm-debug.log*
 .env
 .env.production
 
+# dev-only content editor password config (never commit)
+.dev-edit-config.json
+
 # macOS-specific files
 .DS_Store
 

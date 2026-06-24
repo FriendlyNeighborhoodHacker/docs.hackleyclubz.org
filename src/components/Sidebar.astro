@@ -1,0 +1,164 @@
+---
+import { navItems, pathToSlug } from '../lib/nav';
+
+interface Props {
+  /** Current path, used to highlight the active link. */
+  pathname: string;
+  /** When true, renders the overlay variant (used inside the mobile menu). */
+  overlay?: boolean;
+}
+
+const { pathname, overlay = false } = Astro.props;
+const current = pathToSlug(pathname);
+
+function isActive(slug: string) {
+  return current === slug;
+}
+---
+
+<nav class="sidebar-nav" aria-label="Documentation">
+  <div class="search-wrap">
+    <!-- Pagefind mounts here. Until a search index is built, the input still
+         shows as a styled placeholder. -->
+    <input
+      type="search"
+      class="search-input"
+      placeholder="Search Docs"
+      aria-label="Search Docs"
+      data-search-trigger
+    />
+    <div id="search-results" class="search-results" hidden></div>
+  </div>
+
+  <ul class="nav-list">
+    {
+      navItems.map((item) => (
+        <li class="nav-item">
+          <a
+            href={`/${item.slug}`}
+            class:list={['nav-link', { active: isActive(item.slug) }]}
+            data-nav-link
+          >
+            {item.title}
+          </a>
+          {item.children && (
+            <ul class="nav-sublist">
+              {item.children.map((child) => (
+                <li>
+                  <a
+                    href={`/${child.slug}`}
+                    class:list={['nav-sublink', { active: isActive(child.slug) }]}
+                    data-nav-link
+                  >
+                    {child.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<style>
+  .sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .search-wrap {
+    position: relative;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 0.6rem 0.85rem;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    color: var(--text);
+    background: var(--bg);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .search-input:focus {
+    border-color: var(--color-coral);
+    box-shadow: 0 0 0 3px var(--accent-pastel-coral);
+  }
+
+  .search-results {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(100% + 6px);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: 0 8px 24px rgba(20, 22, 40, 0.12);
+    padding: 0.5rem;
+    z-index: 20;
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+
+  .nav-list,
+  .nav-sublist {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-item {
+    margin-bottom: 0.15rem;
+  }
+
+  .nav-link {
+    display: block;
+    padding: 0.45rem 0.7rem;
+    border-radius: 8px;
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    text-decoration: none;
+    transition: background 0.12s ease, color 0.12s ease;
+  }
+  .nav-link:hover {
+    background: var(--bg-subtle);
+    text-decoration: none;
+  }
+  .nav-link.active {
+    background: var(--accent-pastel-coral);
+    color: var(--color-coral-dark);
+    font-weight: 600;
+  }
+
+  .nav-sublist {
+    margin: 0.15rem 0 0.4rem 0.75rem;
+    border-left: 2px solid var(--border);
+    padding-left: 0.4rem;
+  }
+
+  .nav-sublink {
+    display: block;
+    padding: 0.35rem 0.6rem;
+    border-radius: 8px;
+    color: var(--text-muted);
+    font-size: 0.93rem;
+    text-decoration: none;
+    transition: background 0.12s ease, color 0.12s ease;
+  }
+  .nav-sublink:hover {
+    background: var(--bg-subtle);
+    color: var(--text);
+    text-decoration: none;
+  }
+  .nav-sublink.active {
+    background: var(--accent-pastel-purple);
+    color: var(--color-purple);
+    font-weight: 600;
+  }
+</style>

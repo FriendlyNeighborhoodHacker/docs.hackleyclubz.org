@@ -1,0 +1,219 @@
+---
+import { getCollection } from 'astro:content';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import '../styles/global.css';
+
+// This editor route is injected only in dev (see src/integrations/dev-editor.ts),
+// and runs on demand so it always reflects the current on-disk content.
+export const prerender = false;
+
+const slug = Astro.params.slug ?? '';
+const docs = await getCollection('docs');
+const entry = docs.find((d: (typeof docs)[number]) => d.id.replace(/\/index$/, '') === slug);
+
+if (!entry) {
+  return new Response('Not found', { status: 404 });
+}
+
+// Read the raw source file so the editor shows the real on-disk content,
+// split into frontmatter and body.
+const CONTENT_ROOT = join(process.cwd(), 'src', 'content', 'docs');
+const candidates = [
+  join(CONTENT_ROOT, `${slug}.md`),
+  join(CONTENT_ROOT, `${slug}.mdx`),
+  join(CONTENT_ROOT, slug, 'index.md'),
+  join(CONTENT_ROOT, slug, 'index.mdx'),
+];
+
+let raw = '';
+for (const file of candidates) {
+  try {
+    raw = readFileSync(file, 'utf-8');
+    break;
+  } catch {
+    /* try next */
+  }
+}
+
+// Split out the YAML frontmatter and the body.
+let frontmatter = '';
+let bodyContent = raw;
+const match = raw.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
+if (match) {
+  frontmatter = match[1];
+  bodyContent = match[2].replace(/^\s+/, '');
+}
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Edit · {entry.data.title}</title>
+  </head>
+  <body>
+    <main class="editor">
+      <header class="editor-header">
+        <h1>Edit “{entry.data.title}”</h1>
+        <a class="view-link" href={`/${slug}`}>← Back to page</a>
+      </header>
+
+      <p class="hint">
+        Update the front matter and body below, enter the edit password, and save.
+        Changes are written directly to <code>src/content/docs/{slug}</code>.
+      </p>
+
+      <form id="edit-form">
+        <input type="hidden" id="slug" value={slug} />
+
+        <label class="field-label" for="frontmatter">Front matter (YAML)</label>
+        <textarea id="frontmatter" class="code-area fm" spellcheck="false">{frontmatter}</textarea>
+
+        <label class="field-label" for="content">Body (Markdown / MDX)</label>
+        <textarea id="content" class="code-area body" spellcheck="false">{bodyContent}</textarea>
+
+        <div class="save-row">
+          <input
+            type="password"
+            id="password"
+            class="password-input"
+            placeholder="Edit password"
+            autocomplete="off"
+          />
+          <button type="submit" class="next-button" id="save-btn">Save changes</button>
+        </div>
+
+        <p id="status" class="status" role="status"></p>
+      </form>
+    </main>
+
+    <style>
+      .editor {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 2.5rem 1.5rem 5rem;
+      }
+      .editor-header {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .editor-header h1 {
+        margin: 0;
+      }
+      .view-link {
+        color: var(--color-coral-dark);
+        font-family: var(--font-body);
+      }
+      .hint {
+        color: var(--text-muted);
+        margin-top: 0.5rem;
+      }
+      .field-label {
+        display: block;
+        margin: 1.5rem 0 0.4rem;
+        font-family: var(--font-title);
+        font-weight: 200;
+        font-size: 1.1rem;
+      }
+      .code-area {
+        width: 100%;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        color: var(--text);
+        background: var(--bg-subtle);
+        border: 1px solid var(--border-strong);
+        border-radius: var(--radius);
+        padding: 0.9rem 1rem;
+        resize: vertical;
+      }
+      .code-area:focus {
+        outline: none;
+        border-color: var(--next-btn);
+        box-shadow: 0 0 0 3px var(--accent-pastel-blue);
+      }
+      .fm {
+        min-height: 140px;
+      }
+      .body {
+        min-height: 420px;
+      }
+      .save-row {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-top: 1.25rem;
+        flex-wrap: wrap;
+      }
+      .password-input {
+        padding: 0.6rem 0.85rem;
+        font-family: var(--font-body);
+        border: 1px solid var(--border-strong);
+        border-radius: var(--radius);
+        min-width: 220px;
+      }
+      .password-input:focus {
+        outline: none;
+        border-color: var(--next-btn);
+        box-shadow: 0 0 0 3px var(--accent-pastel-blue);
+      }
+      .status {
+        margin-top: 1rem;
+        font-weight: 600;
+        min-height: 1.4em;
+      }
+      .status.ok {
+        color: #1a7f37;
+      }
+      .status.err {
+        color: #c0362c;
+      }
+    </style>
+
+    <script>
+      const form = document.getElementById('edit-form') as HTMLFormElement;
+      const statusEl = document.getElementById('status') as HTMLElement;
+      const btn = document.getElementById('save-btn') as HTMLButtonElement;
+
+      form?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        statusEl.className = 'status';
+        statusEl.textContent = 'Saving…';
+        btn.disabled = true;
+
+        const payload = {
+          slug: (document.getElementById('slug') as HTMLInputElement).value,
+          frontmatter: (document.getElementById('frontmatter') as HTMLTextAreaElement).value,
+          content: (document.getElementById('content') as HTMLTextAreaElement).value,
+          password: (document.getElementById('password') as HTMLInputElement).value,
+        };
+
+        try {
+          const res = await fetch('/api/save', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          });
+          const data = await res.json();
+          if (res.ok) {
+            statusEl.className = 'status ok';
+            statusEl.textContent = 'Saved! Your changes are written to disk.';
+          } else {
+            statusEl.className = 'status err';
+            statusEl.textContent = data.error || 'Something went wrong.';
+          }
+        } catch (err) {
+          statusEl.className = 'status err';
+          statusEl.textContent = 'Network error: ' + (err as Error).message;
+        } finally {
+          btn.disabled = false;
+        }
+      });
+    </script>
+  </body>
+</html>
