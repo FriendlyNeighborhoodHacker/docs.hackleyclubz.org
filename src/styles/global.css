@@ -195,6 +195,27 @@ hr {
   margin: 2rem 0;
 }
 
+/* Content images (e.g. product screenshots) render compact and framed so
+   tall phone screenshots don't dominate the page. */
+.doc img {
+  max-width: 360px;
+  max-height: 520px;
+  width: auto;
+  height: auto;
+  display: block;
+  margin: 1rem 0 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 2px 12px rgba(20, 22, 40, 0.06);
+}
+/* The header logo should not inherit the framed content-image styling. */
+.brand-logo {
+  border: none;
+  box-shadow: none;
+  margin: 0;
+  border-radius: 0;
+}
+
 /* Forward/next action button */
 .next-button {
   display: inline-flex;

@@ -4,35 +4,29 @@ description: What Hackley Clubz is and who it serves.
 order: 10
 ---
 
-# Hackley Clubz Overview
+# Hackley Clubz Overview.
 
-Hackley Clubz is the platform that powers student clubs and activities at Hackley
-School. It gives students a single place to discover clubs, join them, and stay
-up to date, while giving faculty advisors and administrators the tools to manage
-membership, communication, and reporting.
-
-This documentation site has two audiences:
-
-- **The IT Director** — to understand the technical architecture, data model, and
-  how to operate and extend the system.
-- **The Dean** — to understand the product features, the people who use them, and
-  the day-to-day flows that students and faculty experience.
-
-## What the platform does
-
-- **Club discovery** — a browsable directory of every approved club.
-- **Membership** — students request to join; advisors approve members.
-- **Communication** — announcements and chat keep members informed.
-- **Administration** — admins approve clubs, manage users, and oversee activity.
-- **Reporting** — leadership can see participation and engagement metrics.
-
-## How to use these docs
-
-Use the menu on the left to navigate. The **Users**, **Key User Flows**, and
-**Key Admin Flows** pages describe the experience. The **Data Model**,
-**Reporting Flows**, and **Developer Docs** sections describe how it all works
-under the hood.
+Our mission is to centralize how Hackley students engage with clubs, so that it is easier for students to participate in clubs and to run clubs and for faculty to support clubs.
 
 
+## What the platform does.
 
+### Students can easily browse clubs.
 
+![Browse clubs](../../assets/images/browse_clubs.png)
+
+### Students can have a unified calender view of their events.
+
+![Personalized calendar](../../assets/images/personalized_calender.png)
+
+### Clubs can create/text in chats.
+
+![Club chats](../../assets/images/chats.png)
+
+### Students can easily see their club information.
+
+![A club's info page](../../assets/images/club_info_page.png)
+
+### Students can apply to create new clubs which administrators can approve.
+
+![New club application](../../assets/images/new_club_application.png)
