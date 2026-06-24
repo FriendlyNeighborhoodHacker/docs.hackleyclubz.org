@@ -2,17 +2,17 @@
 import '../styles/global.css';
 import Sidebar from '../components/Sidebar.astro';
 import EditButton from '../components/EditButton.astro';
+import { pathToSlug } from '../lib/nav';
 import logo from '../assets/images/logo.png';
 
-interface Props {
-  title: string;
-  description?: string;
-  /** Current doc slug (used by the dev edit button). */
-  slug?: string;
-}
-
-const { title, description, slug } = Astro.props;
+// This layout is referenced from each doc's `layout:` front matter key, so
+// Astro passes the parsed front matter as `Astro.props.frontmatter`. The
+// current slug is derived from the URL rather than passed explicitly.
+const { frontmatter } = Astro.props;
+const title = frontmatter?.title;
+const description = frontmatter?.description;
 const pathname = Astro.url.pathname;
+const slug = pathToSlug(pathname);
 const pageTitle = `${title} · Hackley Clubz Docs`;
 ---
 

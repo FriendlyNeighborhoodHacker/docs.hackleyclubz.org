@@ -1,4 +1,5 @@
 ---
+layout: ../layouts/DocsLayout.astro
 title: Data Model
 description: The core entities and relationships behind Hackley Clubz.
 order: 50

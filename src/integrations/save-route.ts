@@ -18,7 +18,7 @@ import { join } from 'node:path';
 // as an on-demand handler under the dev server.
 export const prerender = false;
 
-const CONTENT_ROOT = join(process.cwd(), 'src', 'content', 'docs');
+const CONTENT_ROOT = join(process.cwd(), 'src', 'pages');
 const CONFIG_PATH = join(process.cwd(), '.dev-edit-config.json');
 
 function getEditPassword(): string | null {

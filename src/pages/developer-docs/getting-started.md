@@ -1,4 +1,5 @@
 ---
+layout: ../../layouts/DocsLayout.astro
 title: Getting Started
 description: Set up a local environment for the docs site.
 order: 72

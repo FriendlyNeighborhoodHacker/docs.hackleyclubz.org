@@ -1,4 +1,5 @@
 ---
+layout: ../layouts/DocsLayout.astro
 title: Key User Flows
 description: The most important things students do in Hackley Clubz.
 order: 30

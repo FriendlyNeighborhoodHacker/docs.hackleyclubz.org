@@ -1,4 +1,5 @@
 ---
+layout: ../../layouts/DocsLayout.astro
 title: Technical Overview
 description: The architecture of the Hackley Clubz platform.
 order: 71

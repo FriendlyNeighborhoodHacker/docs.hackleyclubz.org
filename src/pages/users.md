@@ -1,4 +1,5 @@
 ---
+layout: ../layouts/DocsLayout.astro
 title: Users
 description: The roles and people who use Hackley Clubz.
 order: 20

@@ -1,4 +1,5 @@
 ---
+layout: ../layouts/DocsLayout.astro
 title: Reporting Flows
 description: How leadership measures participation and engagement.
 order: 60

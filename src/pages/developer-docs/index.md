@@ -1,4 +1,5 @@
 ---
+layout: ../../layouts/DocsLayout.astro
 title: Developer Docs
 description: Technical documentation for engineers working on Hackley Clubz.
 order: 70

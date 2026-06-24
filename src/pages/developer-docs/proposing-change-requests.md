@@ -1,4 +1,5 @@
 ---
+layout: ../../layouts/DocsLayout.astro
 title: Proposing Change Requests
 description: How to suggest and ship changes to Hackley Clubz.
 order: 73

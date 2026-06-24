@@ -1,4 +1,5 @@
 ---
+layout: ../layouts/DocsLayout.astro
 title: Overview
 description: What Hackley Clubz is and who it serves.
 order: 10
@@ -13,20 +14,20 @@ Our mission is to centralize how Hackley students engage with clubs, so that it 
 
 ### Students can easily browse clubs.
 
-![Browse clubs](../../assets/images/browse_clubs.png)
+![Browse clubs](../assets/images/browse_clubs.png)
 
 ### Students can have a unified calender view of their events.
 
-![Personalized calendar](../../assets/images/personalized_calender.png)
+![Personalized calendar](../assets/images/personalized_calender.png)
 
 ### Clubs can create/text in chats.
 
-![Club chats](../../assets/images/chats.png)
+![Club chats](../assets/images/chats.png)
 
 ### Students can easily see their club information.
 
-![A club's info page](../../assets/images/club_info_page.png)
+![A club's info page](../assets/images/club_info_page.png)
 
 ### Students can apply to create new clubs which administrators can approve.
 
-![New club application](../../assets/images/new_club_application.png)
+![New club application](../assets/images/new_club_application.png)

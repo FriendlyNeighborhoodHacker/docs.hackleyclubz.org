@@ -1,4 +1,5 @@
 ---
+layout: ../layouts/DocsLayout.astro
 title: Key Admin Flows
 description: The most important things advisors and administrators do.
 order: 40

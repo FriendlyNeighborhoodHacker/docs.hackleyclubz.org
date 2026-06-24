@@ -1,5 +1,4 @@
 ---
-import { getCollection } from 'astro:content';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import '../styles/global.css';
@@ -9,16 +8,11 @@ import '../styles/global.css';
 export const prerender = false;
 
 const slug = Astro.params.slug ?? '';
-const docs = await getCollection('docs');
-const entry = docs.find((d: (typeof docs)[number]) => d.id.replace(/\/index$/, '') === slug);
 
-if (!entry) {
-  return new Response('Not found', { status: 404 });
-}
-
-// Read the raw source file so the editor shows the real on-disk content,
-// split into frontmatter and body.
-const CONTENT_ROOT = join(process.cwd(), 'src', 'content', 'docs');
+// Read the raw source file directly from src/pages so the editor shows the real
+// on-disk content, split into frontmatter and body. Docs now live as plain page
+// markdown, so there is no content collection to query.
+const CONTENT_ROOT = join(process.cwd(), 'src', 'pages');
 const candidates = [
   join(CONTENT_ROOT, `${slug}.md`),
   join(CONTENT_ROOT, `${slug}.mdx`),
@@ -27,13 +21,19 @@ const candidates = [
 ];
 
 let raw = '';
+let found = false;
 for (const file of candidates) {
   try {
     raw = readFileSync(file, 'utf-8');
+    found = true;
     break;
   } catch {
     /* try next */
   }
+}
+
+if (!found) {
+  return new Response('Not found', { status: 404 });
 }
 
 // Split out the YAML frontmatter and the body.
@@ -44,6 +44,10 @@ if (match) {
   frontmatter = match[1];
   bodyContent = match[2].replace(/^\s+/, '');
 }
+
+// Derive a display title from the frontmatter; fall back to the slug.
+const titleMatch = frontmatter.match(/^title:\s*(.+)$/m);
+const pageTitle = titleMatch ? titleMatch[1].trim().replace(/^["']|["']$/g, '') : slug;
 ---
 
 <!doctype html>
@@ -51,18 +55,18 @@ if (match) {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Edit · {entry.data.title}</title>
+    <title>Edit · {pageTitle}</title>
   </head>
   <body>
     <main class="editor">
       <header class="editor-header">
-        <h1>Edit “{entry.data.title}”</h1>
+        <h1>Edit “{pageTitle}”</h1>
         <a class="view-link" href={`/${slug}`}>← Back to page</a>
       </header>
 
       <p class="hint">
         Update the front matter and body below, enter the edit password, and save.
-        Changes are written directly to <code>src/content/docs/{slug}</code>.
+        Changes are written directly to <code>src/pages/{slug}</code>.
       </p>
 
       <form id="edit-form">

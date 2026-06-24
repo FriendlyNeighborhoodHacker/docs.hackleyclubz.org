@@ -1,4 +1,5 @@
 ---
+layout: ../../layouts/DocsLayout.astro
 title: Design Guidelines
 description: Visual and UX rules for Hackley Clubz.
 order: 74
