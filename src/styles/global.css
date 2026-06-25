@@ -198,8 +198,8 @@ hr {
 /* Content images (e.g. product screenshots) render compact and framed so
    tall phone screenshots don't dominate the page. */
 .doc img {
-  max-width: 360px;
-  max-height: 520px;
+  max-width: 700px;
+  max-height: 820px;
   width: auto;
   height: auto;
   display: block;
@@ -208,7 +208,14 @@ hr {
   border-radius: var(--radius);
   box-shadow: 0 2px 12px rgba(20, 22, 40, 0.06);
 }
+/* Reporting Flows page: show its screenshots larger than the global default. */
+.doc.reporting-flows img {
+  max-width: 560px;
+  max-height: 780px;
+}
+
 /* The header logo should not inherit the framed content-image styling. */
+
 .brand-logo {
   border: none;
   box-shadow: none;

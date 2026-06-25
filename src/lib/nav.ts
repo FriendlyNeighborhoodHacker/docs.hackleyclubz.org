@@ -24,7 +24,6 @@ export const navItems: NavItem[] = [
     slug: 'developer-docs',
     children: [
       { title: 'Technical Overview', slug: 'developer-docs/technical-overview' },
-      { title: 'Getting Started', slug: 'developer-docs/getting-started' },
       {
         title: 'Proposing Change Requests',
         slug: 'developer-docs/proposing-change-requests',

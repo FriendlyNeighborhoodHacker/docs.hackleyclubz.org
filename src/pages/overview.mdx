@@ -5,6 +5,9 @@ description: What Hackley Clubz is and who it serves.
 order: 10
 ---
 
+import { Image } from 'astro:assets';
+import browse_clubs_image from '../assets/images/browse_clubs.png';
+
 # Hackley Clubz Overview.
 
 Our mission is to centralize how Hackley students engage with clubs, so that it is easier for students to participate in clubs and to run clubs and for faculty to support clubs.
@@ -14,7 +17,7 @@ Our mission is to centralize how Hackley students engage with clubs, so that it 
 
 ### Students can easily browse clubs.
 
-![Browse clubs](../assets/images/browse_clubs.png)
+<Image src={browse_clubs_image} alt="browse clubs image" width="700" />
 
 ### Students can have a unified calender view of their events.
 
@@ -31,3 +34,11 @@ Our mission is to centralize how Hackley students engage with clubs, so that it 
 ### Students can apply to create new clubs which administrators can approve.
 
 ![New club application](../assets/images/new_club_application.png)
+
+
+
+
+
+
+
+

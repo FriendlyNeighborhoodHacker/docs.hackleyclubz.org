@@ -14,6 +14,9 @@ const description = frontmatter?.description;
 const pathname = Astro.url.pathname;
 const slug = pathToSlug(pathname);
 const pageTitle = `${title} · Hackley Clubz Docs`;
+// Optional per-page body class set via front matter (e.g. `bodyClass: reporting-flows`)
+// so individual pages can scope style overrides like larger images.
+const bodyClass = frontmatter?.bodyClass;
 ---
 
 <!doctype html>
@@ -60,7 +63,8 @@ const pageTitle = `${title} · Hackley Clubz Docs`;
 
         <!-- Main content -->
         <main class="content">
-          <article class="doc" data-pagefind-body>
+          <article class:list={['doc', bodyClass]} data-pagefind-body>
+
             <slot />
           </article>
         </main>
