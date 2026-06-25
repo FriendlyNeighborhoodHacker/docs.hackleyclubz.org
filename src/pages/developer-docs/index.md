@@ -9,7 +9,7 @@ section: developer-docs
 # Developer Docs
 
 - **[Technical Overview](/developer-docs/technical-overview)** — High level. What runs where.
-- **[Proposing Change Requests](/developer-docs/proposing-change-requests)** — how
+- **[Proposing Change Requests](/developer-docs/proposing-change-requests)** — How
   to suggest and ship changes.
-- **[Design Guidelines](/developer-docs/design-guidelines)** — the visual and UX
+- **[Design Guidelines](/developer-docs/design-guidelines)** — The visual and UX
   rules to follow.
