@@ -13,7 +13,8 @@ export interface NavItem {
 }
 
 export const navItems: NavItem[] = [
-  { title: 'Overview', slug: 'overview' },
+  { title: 'Overview', slug: '' },
+
   { title: 'Users', slug: 'users' },
   { title: 'Key User Flows', slug: 'key-user-flows' },
   { title: 'Key Admin Flows', slug: 'key-admin-flows' },

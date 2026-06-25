@@ -34,7 +34,8 @@ const bodyClass = frontmatter?.bodyClass;
     <div class="layout">
       <!-- Header -->
       <header class="site-header">
-        <a class="brand" href="/overview" aria-label="Hackley Clubz Docs home">
+        <a class="brand" href="/" aria-label="Hackley Clubz Docs home">
+
           <img class="brand-logo" src={logo.src} alt="Hackley Clubz" />
           <span class="brand-slash">/</span>
           <span class="brand-docs">Docs</span>
@@ -85,7 +86,8 @@ const bodyClass = frontmatter?.bodyClass;
       </div>
     </div>
 
-    {slug && <EditButton slug={slug} />}
+    <EditButton slug={slug || 'index'} />
+
 
     <style>
       .layout {
