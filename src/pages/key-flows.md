@@ -21,8 +21,7 @@ order: 30
 ## Content Moderators.
 Review reported content. 
 
-## Club Approvers 
-(both Communtiy Engagment Club Approver and Club Approver).
+## Club Approvers (both Communtiy Engagment Club Approver and Club Approver).
 Approve or reject club applications.
 
 
