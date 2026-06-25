@@ -31,6 +31,7 @@ export const navItems: NavItem[] = [
       { title: 'Design Guidelines', slug: 'developer-docs/design-guidelines' },
     ],
   },
+  { title: 'Team', slug: 'team' },
 ];
 
 /**
