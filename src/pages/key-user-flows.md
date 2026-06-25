@@ -17,3 +17,6 @@ order: 30
 1. Create an event.
 2. Create a new chat.
 3. Change Club information.
+
+
+
